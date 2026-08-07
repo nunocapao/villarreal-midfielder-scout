@@ -4,8 +4,12 @@ Filtra volantes e calcula o índice de adequação ao perfil do Villarreal.
 Perfil: bloco médio, pressão seletiva, transições verticais rápidas.
 """
 
+import sys
 import pandas as pd
 from pathlib import Path
+
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
 
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 PROCESSED_DIR = Path(__file__).resolve().parent.parent / "data" / "processed"
@@ -26,10 +30,10 @@ def flatten_columns(df):
     return df
 
 
-def filter_midfielders(df, min_90s=5.0):
+def filter_midfielders(df, min_90s=10.0):
     """
-    Filtra jogadores com posição MF e mínimo de minutos jogados.
-    min_90s=5 significa pelo menos 450 minutos — evita jogadores com poucos dados.
+    Filtra jogadores com posição primária MF e mínimo de minutos jogados.
+    min_90s=10 significa pelo menos 900 minutos — evita jogadores com poucos dados.
     """
     df = df.copy()
 
@@ -37,8 +41,11 @@ def filter_midfielders(df, min_90s=5.0):
     pos_col = [c for c in df.columns if 'pos' in c.lower()][0]
     age_col = [c for c in df.columns if 'age' in c.lower()][0]
 
-    # Filtrar por posição MF
-    df = df[df[pos_col].str.contains('MF', na=False)]
+    # A posição primária é o primeiro código antes da vírgula (ex: "DF,MF" -> lateral
+    # que ocasionalmente joga no meio-campo, não um volante). Exigir MF como primária
+    # evita incluir laterais/zagueiros híbridos no pool de volantes.
+    primary_pos = df[pos_col].astype(str).str.split(',').str[0]
+    df = df[primary_pos == 'MF']
 
     # Filtrar por minutos mínimos
     nineties_col = [c for c in df.columns if '90s' in c or 'Unnamed: 8' in c][0]
@@ -48,16 +55,28 @@ def filter_midfielders(df, min_90s=5.0):
     return df
 
 
+def percentile_normalize(series):
+    """
+    Normaliza por rank percentual (0-1) em vez de min-max.
+    Robusto a outliers: um único valor extremo (comum em métricas de amostra
+    pequena, ex. On-Off) não distorce a escala de todos os outros jogadores.
+    """
+    return series.rank(pct=True, method='average')
+
+
 def build_villarreal_index(df_std, df_misc, df_play):
     """
     Constrói o índice de adequação ao perfil do Villarreal.
 
-    Métricas usadas (todas por 90 minutos):
+    Métricas usadas (todas por 90 minutos, exceto On-Off):
     - TklW (tackles ganhos)       → recuperação de bola
     - Int (interceções)           → leitura do jogo
     - Fls (faltas cometidas)      → agressividade controlada (invertido — menos é melhor)
     - CrdY (cartões amarelos)     → disciplina (invertido)
-    - PPM (pontos por jogo do team quando em campo) → impacto em vitórias
+    - On-Off (saldo de gols do time com o jogador em campo vs fora, ajustado à
+      média do próprio time) → impacto individual real. Preferido a PPM puro:
+      PPM mede a qualidade do time (um reserva do Real Madrid tem PPM alto só
+      por jogar lá), enquanto On-Off isola a contribuição marginal do jogador.
     """
 
     # Flatten
@@ -76,11 +95,11 @@ def build_villarreal_index(df_std, df_misc, df_play):
                            if any(x in c for x in ['pos', 'age', '90s', 'TklW', 'Int', 'Fls', 'CrdY'])]
     df = df_misc[misc_cols].copy()
 
-    # Juntar PPM do playing_time
-    ppm_cols = id_cols + [c for c in df_play.columns if 'PPM' in c]
-    if ppm_cols:
-        df_ppm = df_play[ppm_cols].drop_duplicates(subset=id_cols)
-        df = df.merge(df_ppm, on=id_cols, how='left')
+    # Juntar On-Off do playing_time (impacto ajustado ao time)
+    onoff_cols = id_cols + [c for c in df_play.columns if 'On-Off' in c]
+    if onoff_cols:
+        df_onoff = df_play[onoff_cols].drop_duplicates(subset=id_cols)
+        df = df.merge(df_onoff, on=id_cols, how='left')
 
     # Converter para numérico
     metric_cols = [c for c in df.columns if c not in id_cols + ['pos', 'age']]
@@ -93,28 +112,26 @@ def build_villarreal_index(df_std, df_misc, df_play):
     df['Int_p90']  = df[[c for c in df.columns if 'Int' in c][0]]  / nineties
     df['Fls_p90']  = df[[c for c in df.columns if 'Fls' in c][0]]  / nineties
     df['CrdY_p90'] = df[[c for c in df.columns if 'CrdY' in c][0]] / nineties
-    ppm_col = [c for c in df.columns if 'PPM' in c]
-    df['PPM'] = df[ppm_col[0]] if ppm_col else 0
+    onoff_col = [c for c in df.columns if 'On-Off' in c]
+    df['OnOff'] = df[onoff_col[0]] if onoff_col else 0
 
-    # Normalizar 0-1 (min-max)
-    def normalize(series):
-        mn, mx = series.min(), series.max()
-        return (series - mn) / (mx - mn) if mx > mn else series * 0
-
-    df['n_TklW'] = normalize(df['TklW_p90'])
-    df['n_Int']  = normalize(df['Int_p90'])
-    df['n_Fls']  = 1 - normalize(df['Fls_p90'])   # invertido
-    df['n_CrdY'] = 1 - normalize(df['CrdY_p90'])  # invertido
-    df['n_PPM']  = normalize(df['PPM'])
+    # Normalizar 0-1 (percentil, robusto a outliers)
+    df['n_TklW'] = percentile_normalize(df['TklW_p90'])
+    df['n_Int']  = percentile_normalize(df['Int_p90'])
+    df['n_Fls']  = 1 - percentile_normalize(df['Fls_p90'])   # invertido
+    df['n_CrdY'] = 1 - percentile_normalize(df['CrdY_p90'])  # invertido
+    df['n_OnOff'] = percentile_normalize(df['OnOff'])
 
     # Índice final — pesos baseados no perfil do Villarreal
-    # Recuperação e leitura pesam mais, disciplina e impacto em vitórias completam
+    # Recuperação e leitura pesam mais (núcleo do perfil de volante destruidor);
+    # disciplina pesa pouco (métricas ruidosas em amostra de uma temporada);
+    # impacto (On-Off) completa o índice sem carregar o viés de "jogar num time forte".
     df['villarreal_index'] = (
-        df['n_TklW'] * 0.30 +
-        df['n_Int']  * 0.25 +
-        df['n_Fls']  * 0.15 +
-        df['n_CrdY'] * 0.10 +
-        df['n_PPM']  * 0.20
+        df['n_TklW'] * 0.32 +
+        df['n_Int']  * 0.28 +
+        df['n_Fls']  * 0.10 +
+        df['n_CrdY'] * 0.08 +
+        df['n_OnOff'] * 0.22
     )
 
     df = df.sort_values('villarreal_index', ascending=False)

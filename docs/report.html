@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volante para o Villarreal — Relatório de Scouting</title>
+<meta name="description" content="Dossiê visual: ranking de custo-benefício, mapa de oportunidade e diagnóstico estatístico para a contratação de um volante defensivo do Villarreal CF.">
+<style>
+  :root{
+    color-scheme: light;
+    --page:        #f7f8f4;
+    --surface:     #ffffff;
+    --surface-2:   #f0f2ea;
+    --ink:         #10130d;
+    --ink-2:       #52564a;
+    --muted:       #83867a;
+    --grid:        #e2e4da;
+    --baseline:    #c7cabd;
+    --border:      rgba(16,19,13,0.10);
+    --accent:      #a8690a;
+    --accent-fill: #eda100;
+    --accent-ink:  #6b4400;
+    --reference:   #2a78d6;
+    --pool:        #a9ac9a;
+    --pool-dot:    #b3b6a6;
+    --div-neg:     #2a78d6;
+    --div-pos:     #e34948;
+    --div-mid:     #f0efec;
+    --good:        #0ca30c;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])){
+      color-scheme: dark;
+      --page:        #0b0d08;
+      --surface:     #14170f;
+      --surface-2:   #1a1e14;
+      --ink:         #f5f6f0;
+      --ink-2:       #c4c7b8;
+      --muted:       #8b8f7f;
+      --grid:        #262b1e;
+      --baseline:    #383d2e;
+      --border:      rgba(255,255,255,0.10);
+      --accent:      #eda100;
+      --accent-fill: #c98500;
+      --accent-ink:  #ffcf6b;
+      --reference:   #3987e5;
+      --pool:        #383d2e;
+      --pool-dot:    #4c5140;
+      --div-neg:     #3987e5;
+      --div-pos:     #e66767;
+      --div-mid:     #383835;
+      --good:        #0ca30c;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:        #0b0d08;
+    --surface:     #14170f;
+    --surface-2:   #1a1e14;
+    --ink:         #f5f6f0;
+    --ink-2:       #c4c7b8;
+    --muted:       #8b8f7f;
+    --grid:        #262b1e;
+    --baseline:    #383d2e;
+    --border:      rgba(255,255,255,0.10);
+    --accent:      #eda100;
+    --accent-fill: #c98500;
+    --accent-ink:  #ffcf6b;
+    --reference:   #3987e5;
+    --pool:        #383d2e;
+    --pool-dot:    #4c5140;
+    --div-neg:     #3987e5;
+    --div-pos:     #e66767;
+    --div-mid:     #383835;
+    --good:        #0ca30c;
+  }
+  :root[data-theme="light"]{
+    color-scheme: light;
+    --page:        #f7f8f4;
+    --surface:     #ffffff;
+    --surface-2:   #f0f2ea;
+    --ink:         #10130d;
+    --ink-2:       #52564a;
+    --muted:       #83867a;
+    --grid:        #e2e4da;
+    --baseline:    #c7cabd;
+    --border:      rgba(16,19,13,0.10);
+    --accent:      #a8690a;
+    --accent-fill: #eda100;
+    --accent-ink:  #6b4400;
+    --reference:   #2a78d6;
+    --pool:        #a9ac9a;
+    --pool-dot:    #b3b6a6;
+    --div-neg:     #2a78d6;
+    --div-pos:     #e34948;
+    --div-mid:     #f0efec;
+    --good:        #0ca30c;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .mono{ font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace; }
+  .tab-num{ font-variant-numeric: tabular-nums; }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 72px 24px 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+  }
+  .hero-inner{ max-width: 1180px; margin: 0 auto; }
+  .eyebrow{
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before{
+    content: "";
+    width: 22px; height: 2px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  h1{
+    font-size: clamp(34px, 5.2vw, 58px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.03;
+    margin: 0 0 18px;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+  h1 em{
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub{
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0 0 40px;
+  }
+  .stat-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stat-tile{
+    background: var(--surface);
+    padding: 20px 20px 18px;
+    min-width: 0;
+  }
+  .stat-value{
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-weight: 700;
+    font-size: clamp(22px, 2.6vw, 30px);
+    color: var(--accent);
+    display: block;
+    line-height: 1.1;
+  }
+  .stat-label{
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ---------- Sections ---------- */
+  section.block{ margin-bottom: 64px; }
+  .sec-head{ max-width: 78ch; margin-bottom: 28px; }
+  .sec-eyebrow{
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  h2{
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.005em;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .sec-desc{ color: var(--ink-2); font-size: 15px; margin: 0; }
+  .panel{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+  }
+
+  /* ---------- Pipeline ---------- */
+  .pipeline{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .pipeline::before{
+    content:"";
+    position:absolute; left: 6%; right: 6%; top: 15px;
+    height: 1px; background: var(--baseline);
+  }
+  .pstep{ position: relative; padding: 0 14px 0 0; }
+  .pnum{
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--accent);
+    color: var(--accent-ink);
+    display: flex; align-items:center; justify-content:center;
+    font-family: ui-monospace, monospace; font-weight:700; font-size: 13px;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+  .ptitle{ font-weight: 700; font-size: 13.5px; margin-bottom: 4px; }
+  .pdesc{ font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+
+  /* ---------- Bar chart (top 15) ---------- */
+  .bars{ display:flex; flex-direction:column; gap:3px; }
+  .bar-row{
+    display:grid;
+    grid-template-columns: 26px 168px 1fr 84px;
+    align-items:center;
+    gap: 10px;
+    padding: 6px 4px;
+    border-radius: 4px;
+    cursor: default;
+  }
+  .bar-row:hover{ background: var(--surface-2); }
+  .bar-rank{ font-family: ui-monospace, monospace; color: var(--muted); font-size: 12px; text-align:right; }
+  .bar-name{ min-width:0; }
+  .bar-name .n{ font-weight:600; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-name .c{ font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-track{ position:relative; height: 20px; }
+  .bar-seg{ position:absolute; top:0; height:100%; border-radius: 3px; }
+  .bar-score{ font-family: ui-monospace, monospace; font-size: 12.5px; text-align:right; color: var(--ink-2); }
+  .bar-score b{ color: var(--ink); font-size: 13.5px; }
+  .legend-row{ display:flex; gap:22px; align-items:center; margin-top:18px; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap; }
+  .legend-item{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2); }
+  .legend-swatch{ width:11px; height:11px; border-radius:2.5px; flex:none; }
+
+  /* tooltip */
+  .tt{
+    position: fixed;
+    pointer-events: none;
+    background: var(--ink);
+    color: var(--page);
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 10px 12px;
+    border-radius: 5px;
+    max-width: 240px;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity .08s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .tt.show{ opacity: 1; }
+  .tt b{ display:block; margin-bottom:2px; font-size:12.5px; }
+  .tt .row{ display:flex; justify-content:space-between; gap:14px; opacity:.85; }
+
+  /* ---------- Scatter ---------- */
+  .scatter-wrap{ overflow-x:auto; }
+  svg text{ font-family: system-ui, sans-serif; }
+  .axis-label{ font-size: 11px; fill: var(--muted); }
+  .grid-line{ stroke: var(--grid); stroke-width: 1; }
+  .zone-line{ stroke: var(--baseline); stroke-width: 1; stroke-dasharray: 3 4; }
+  .zone-text{ font-size: 10.5px; fill: var(--muted); font-style: italic; }
+  .dot-pool{ fill: var(--pool-dot); opacity: .55; }
+  .dot-ref{ fill: none; stroke: var(--reference); stroke-width: 1.6; }
+  .dot-pick{ fill: var(--accent-fill); stroke: var(--surface); stroke-width: 1.3; }
+  .dot-label{ font-size: 11px; font-weight: 600; fill: var(--ink); }
+  .dot-label-ref{ font-size: 10.5px; fill: var(--reference); font-weight: 600; }
+
+  /* ---------- Radar ---------- */
+  .radar-grid{ display:grid; grid-template-columns: repeat(5,1fr); gap: 18px; }
+  .radar-card{ text-align:center; }
+  .radar-name{ font-weight:700; font-size:13px; margin-top:8px; }
+  .radar-meta{ font-size:11.5px; color:var(--muted); }
+  .radar-score{ font-family:ui-monospace,monospace; font-size:12.5px; color:var(--accent); font-weight:700; margin-top:2px;}
+  .rpoly-ideal{ fill: var(--muted); fill-opacity:.12; stroke: var(--baseline); stroke-width:1; stroke-dasharray:3 3; }
+  .rpoly-player{ fill: var(--accent-fill); fill-opacity:.32; stroke: var(--accent); stroke-width:1.6; }
+  .rgrid{ stroke: var(--grid); stroke-width: 1; fill:none; }
+  .raxis-label{ font-size: 8.6px; fill: var(--muted); }
+  .radar-note{ font-size:12.5px; color:var(--ink-2); margin-top:22px; padding-top:18px; border-top:1px solid var(--border); }
+
+  /* ---------- Diagnostics ---------- */
+  .diag-grid{ display:grid; grid-template-columns: 1.1fr 1.3fr; gap: 28px; margin-bottom: 22px;}
+  @media (max-width: 860px){ .diag-grid{ grid-template-columns:1fr; } }
+  .diag-title{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .heat-cell-label{ font-size: 9.5px; fill: var(--muted); }
+  .heat-val{ font-size: 11px; font-weight:600; }
+  .wbar-row{ display:grid; grid-template-columns: 84px 1fr; gap:10px; align-items:center; margin-bottom:10px; }
+  .wbar-label{ font-size:12px; color:var(--ink-2); }
+  .wbar-track{ position:relative; height:16px; }
+  .wbar-bg{ position:absolute; inset:0; background:var(--grid); border-radius:2px; }
+  .wbar-fill{ position:absolute; top:0; left:0; height:100%; border-radius:2px; }
+  .wbar-fill.manual{ background: var(--accent-fill); }
+  .wbar-fill.pca{ background: var(--reference); opacity:.55; height:6px; top:5px; }
+  .diag-note{ font-size:13.5px; color:var(--ink-2); line-height:1.6; margin-top: 4px; }
+  .var-row{ display:flex; gap:6px; align-items:flex-end; height:64px; margin-bottom: 6px;}
+  .var-bar{ flex:1; background: var(--reference); border-radius: 2px 2px 0 0; position:relative; }
+  .var-label{ text-align:center; font-size:10.5px; color:var(--muted); margin-top:6px; }
+
+  /* ---------- Player cards ---------- */
+  .cards{ display:grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  @media (max-width: 980px){ .cards{ grid-template-columns: repeat(2,1fr);} }
+  @media (max-width: 560px){ .cards{ grid-template-columns: 1fr;} }
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 5px;
+    padding: 18px 18px 20px;
+    display:flex; flex-direction:column;
+  }
+  .card-rank{ font-family:ui-monospace,monospace; font-size:11px; color:var(--accent-ink); letter-spacing:.06em; }
+  .card-name{ font-weight:800; font-size:16.5px; margin: 4px 0 1px; text-wrap: balance; }
+  .card-meta{ font-size:12px; color:var(--muted); margin-bottom:12px; }
+  .card-stats{ display:flex; gap:14px; margin-bottom:14px; }
+  .card-stat b{ display:block; font-family:ui-monospace,monospace; font-size:15px; }
+  .card-stat span{ font-size:10.5px; color:var(--muted); }
+  .card-bars{ display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
+  .cb-row{ display:grid; grid-template-columns: 58px 1fr; align-items:center; gap:6px; }
+  .cb-label{ font-size:9.5px; color:var(--muted); }
+  .cb-track{ height:5px; background:var(--grid); border-radius:2px; overflow:hidden; }
+  .cb-fill{ height:100%; background: var(--accent-fill); }
+  .card-note{ font-size:12.5px; color:var(--ink-2); line-height:1.5; margin-top:auto; padding-top:12px; border-top:1px solid var(--border); }
+  .card-note b{ color: var(--ink); }
+
+  /* ---------- Table fallback ---------- */
+  details.tview{ margin-top:18px; }
+  details.tview summary{
+    cursor:pointer; font-size:12.5px; color:var(--muted);
+    font-family: ui-monospace, monospace;
+  }
+  .tview table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:12.5px; }
+  .tview th, .tview td{ text-align:left; padding:6px 10px; border-bottom:1px solid var(--border); }
+  .tview th{ color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+  .tview td.num{ text-align:right; font-family:ui-monospace,monospace; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  footer ul{ margin: 10px 0 0; padding-left: 18px; }
+  footer li{ margin-bottom: 4px; }
+  footer .fcode{ font-family: ui-monospace, monospace; color: var(--ink-2); }
+
+  a{ color: var(--accent); }
+
+  @media (max-width: 760px){
+    .pipeline{ grid-template-columns: 1fr 1fr; gap: 20px 14px; }
+    .pipeline::before{ display:none; }
+    .stat-row{ grid-template-columns: 1fr 1fr; }
+    .bar-row{ grid-template-columns: 20px 110px 1fr 60px; }
+    .radar-grid{ grid-template-columns: 1fr 1fr; }
+    .cards{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Relatório de scouting · temporada 25/26</div>
+    <h1>Volante defensivo<br>para o <em>Villarreal CF</em></h1>
+    <p class="hero-sub">Cruzamento entre desempenho tático (FBref, ligas Big-5) e valor de mercado (Transfermarkt) para identificar volantes sub-valorizados dentro do orçamento e do perfil de jogo do clube.</p>
+    <div class="stat-row">
+      <div class="stat-tile"><span class="stat-value tab-num">555</span><span class="stat-label">volantes primários analisados</span></div>
+      <div class="stat-tile"><span class="stat-value tab-num">139</span><span class="stat-label">dentro do orçamento (≤ €30M, 22–28 anos)</span></div>
+      <div class="stat-tile"><span class="stat-value tab-num">22%</span><span class="stat-label">peso do impacto individual (On-Off, não PPM)</span></div>
+      <div class="stat-tile"><span class="stat-value tab-num">5</span><span class="stat-label">perfis recomendados</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- PIPELINE -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Metodologia</div>
+      <h2>Como o ranking é construído</h2>
+      <p class="sec-desc">Cinco etapas, do dado bruto ao ranking final de custo-benefício.</p>
+    </div>
+    <div class="panel">
+      <div class="pipeline">
+        <div class="pstep"><div class="pnum">1</div><div class="ptitle">Coleta</div><div class="pdesc">Estatísticas de todos os jogadores das 5 grandes ligas via FBref (soccerdata).</div></div>
+        <div class="pstep"><div class="pnum">2</div><div class="ptitle">Filtro</div><div class="pdesc">Posição primária MF + mínimo de 900 minutos (10× 90 min) na temporada.</div></div>
+        <div class="pstep"><div class="pnum">3</div><div class="ptitle">Índice tático</div><div class="pdesc">Recuperação, leitura, disciplina e impacto — normalizados por percentil.</div></div>
+        <div class="pstep"><div class="pnum">4</div><div class="ptitle">Valor de mercado</div><div class="pdesc">Cruzamento por nome com o Transfermarkt, filtrado a até €30M.</div></div>
+        <div class="pstep"><div class="pnum">5</div><div class="ptitle">Ranking final</div><div class="pdesc">70% tático + 30% custo-benefício = score final.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP 15 -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Ranking</div>
+      <h2>Top 15 — custo-benefício</h2>
+      <p class="sec-desc">Cada barra é o score final decomposto: <span style="color:var(--accent-ink)">■</span> contribuição tática (70%) + <span style="color:var(--ink-2)">■</span> contribuição de custo (30%, mais barato = mais preenchido). Os 5 primeiros são os perfis recomendados.</p>
+    </div>
+    <div class="panel">
+      <div class="bars" id="barsChart"></div>
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--accent-fill)"></span>Top 5 recomendado</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--pool)"></span>Demais no top 15</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--ink-2);opacity:.4"></span>Segmento de custo (30%)</div>
+      </div>
+      <details class="tview">
+        <summary>Ver como tabela</summary>
+        <div style="overflow-x:auto"><table id="topTable"></table></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- SCATTER -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Mapa de oportunidade</div>
+      <h2>Índice tático vs. valor de mercado</h2>
+      <p class="sec-desc">139 volantes elegíveis (€1–30M, 22–28 anos). Tamanho da bolha = minutos jogados. Passe o cursor sobre qualquer ponto.</p>
+    </div>
+    <div class="panel scatter-wrap">
+      <svg id="scatterChart" width="1100" height="560" viewBox="0 0 1100 560" style="width:100%;height:auto;min-width:640px"></svg>
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--accent-fill);border-radius:50%"></span>Recomendado (top 5)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:transparent;border:1.6px solid var(--reference);border-radius:50%"></span>Referência (fora do top 5, destaque tático)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--pool-dot);opacity:.55;border-radius:50%"></span>Restante do pool elegível</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RADAR -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Perfil tático</div>
+      <h2>Top 5 vs. perfil ideal do Villarreal</h2>
+      <p class="sec-desc">O perfil ideal (linha tracejada) não é estimado — é a média real dos volantes atuais do Villarreal no dataset.</p>
+    </div>
+    <div class="panel">
+      <div class="radar-grid" id="radarGrid"></div>
+      <div class="radar-note" id="radarNote"></div>
+    </div>
+  </section>
+
+  <!-- DIAGNOSTICS -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Checagem de sanidade</div>
+      <h2>Os pesos do índice fazem sentido?</h2>
+      <p class="sec-desc">Correlação entre as 5 métricas e comparação dos pesos manuais contra o que uma análise puramente estatística (PCA) sugeriria, sobre 554 volantes.</p>
+    </div>
+    <div class="panel">
+      <div class="diag-grid">
+        <div>
+          <div class="diag-title">Correlação entre métricas normalizadas</div>
+          <svg id="heatmap" width="360" height="330" viewBox="0 0 360 330"></svg>
+        </div>
+        <div>
+          <div class="diag-title">Peso manual vs. peso implícito (1ª componente PCA)</div>
+          <div id="weightBars"></div>
+          <div class="diag-title" style="margin-top:22px">Variância explicada por componente</div>
+          <div class="var-row" id="varRow"></div>
+        </div>
+      </div>
+      <p class="diag-note">Disciplina (faltas/amarelos) correlaciona 0.49 entre si — redundância esperada. Impacto (On-Off) é quase independente das demais (≤0.12) — confirma que vale a pena mantê-lo como eixo separado. A 1ª componente do PCA explica só 38.9% da variância e puxa mais peso para disciplina — mas isso reflete o que mais <em>varia</em> entre jogadores, não o que importa taticamente para o Villarreal; os pesos manuais continuam sendo a escolha certa aqui.</p>
+    </div>
+  </section>
+
+  <!-- CARDS -->
+  <section class="block">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Recomendação</div>
+      <h2>5 perfis para reforçar o meio-campo</h2>
+      <p class="sec-desc">Ordenados por score final de custo-benefício.</p>
+    </div>
+    <div class="cards" id="playerCards"></div>
+  </section>
+
+  <footer>
+    <strong>Limitações conhecidas</strong>
+    <ul>
+      <li>FBref bloqueou scraping direto (Cloudflare) durante a geração deste relatório — dados de passe progressivo/transição vertical não puderam ser incorporados ainda.</li>
+      <li>Cruzamento de nomes FBref ↔ Transfermarkt por string normalizada: ~92% de correspondência, alguns jogadores podem estar ausentes por divergência de grafia.</li>
+      <li>Himad Abdelli pontua alto no índice tático mas é publicamente mais conhecido como armador ofensivo — vale checar vídeo antes de tratá-lo como destruidor puro.</li>
+      <li>Pesos do índice são uma escolha tática (validada por correlação/PCA), não uma regressão contra resultados reais de jogo.</li>
+    </ul>
+    <p style="margin-top:16px">Gerado a partir de <span class="fcode">data/processed/midfielder_index.csv</span> e <span class="fcode">outputs/rankings/final_ranking.csv</span> · pipeline completo em <span class="fcode">src/</span>.</p>
+  </footer>
+
+</div>
+
+<div class="tt" id="tooltip"></div>
+
+<script>
+const TOP15 = [{"player": "Hugo Magnetti", "team": "Brest", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 29.9, "value": 6.0, "tactical": 0.85, "n_TklW": 0.863, "n_Int": 0.933, "n_Fls": 0.578, "n_CrdY": 0.645, "n_OnOff": 0.922, "score": 0.843}, {"player": "Mohamed Kaba", "team": "Nantes", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 11.2, "value": 2.5, "tactical": 0.776, "n_TklW": 0.766, "n_Int": 0.905, "n_Fls": 0.335, "n_CrdY": 0.496, "n_OnOff": 0.929, "score": 0.828}, {"player": "Himad Abdelli", "team": "Angers", "league": "FRA-Ligue 1", "age": 25.0, "nineties": 10.5, "value": 5.0, "tactical": 0.796, "n_TklW": 0.91, "n_Int": 0.863, "n_Fls": 0.216, "n_CrdY": 0.781, "n_OnOff": 0.812, "score": 0.816}, {"player": "Johann Lepenant", "team": "Nantes", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 25.1, "value": 7.0, "tactical": 0.811, "n_TklW": 0.959, "n_Int": 0.8, "n_Fls": 0.485, "n_CrdY": 0.55, "n_OnOff": 0.855, "score": 0.806}, {"player": "Joris Chotard", "team": "Brest", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 30.8, "value": 7.0, "tactical": 0.804, "n_TklW": 0.598, "n_Int": 0.962, "n_Fls": 0.701, "n_CrdY": 0.871, "n_OnOff": 0.924, "score": 0.801}, {"player": "Tom Krauß", "team": "Köln", "league": "GER-Bundesliga", "age": 24.0, "nineties": 19.8, "value": 4.5, "tactical": 0.752, "n_TklW": 0.987, "n_Int": 0.895, "n_Fls": 0.477, "n_CrdY": 0.431, "n_OnOff": 0.468, "score": 0.79}, {"player": "András Schäfer", "team": "Union Berlin", "league": "GER-Bundesliga", "age": 26.0, "nineties": 15.8, "value": 4.5, "tactical": 0.74, "n_TklW": 0.809, "n_Int": 0.876, "n_Fls": 0.061, "n_CrdY": 0.663, "n_OnOff": 0.804, "score": 0.782}, {"player": "Nicolas Fonseca", "team": "Oviedo", "league": "ESP-La Liga", "age": 26.0, "nineties": 11.3, "value": 3.0, "tactical": 0.698, "n_TklW": 0.991, "n_Int": 0.944, "n_Fls": 0.018, "n_CrdY": 0.005, "n_OnOff": 0.52, "score": 0.768}, {"player": "Julian Niehues", "team": "Heidenheim", "league": "GER-Bundesliga", "age": 24.0, "nineties": 15.4, "value": 1.5, "tactical": 0.671, "n_TklW": 0.159, "n_Int": 0.941, "n_Fls": 0.867, "n_CrdY": 0.871, "n_OnOff": 0.913, "score": 0.765}, {"player": "Manu Morlanes", "team": "Mallorca", "league": "ESP-La Liga", "age": 26.0, "nineties": 19.6, "value": 2.4, "tactical": 0.655, "n_TklW": 0.876, "n_Int": 0.701, "n_Fls": 0.277, "n_CrdY": 0.305, "n_OnOff": 0.573, "score": 0.744}, {"player": "Kristijan Jakić", "team": "Augsburg", "league": "GER-Bundesliga", "age": 28.0, "nineties": 18.4, "value": 6.0, "tactical": 0.703, "n_TklW": 0.78, "n_Int": 0.661, "n_Fls": 0.69, "n_CrdY": 0.253, "n_OnOff": 0.812, "score": 0.74}, {"player": "Fran Beltrán", "team": "Girona", "league": "ESP-La Liga", "age": 26.0, "nineties": 11.2, "value": 4.0, "tactical": 0.672, "n_TklW": 0.695, "n_Int": 0.708, "n_Fls": 0.717, "n_CrdY": 0.267, "n_OnOff": 0.72, "score": 0.739}, {"player": "Cameron Puertas", "team": "Werder Bremen", "league": "GER-Bundesliga", "age": 26.0, "nineties": 20.5, "value": 7.0, "tactical": 0.716, "n_TklW": 0.944, "n_Int": 0.665, "n_Fls": 0.101, "n_CrdY": 0.188, "n_OnOff": 0.92, "score": 0.739}, {"player": "Kamory Doumbia", "team": "Brest", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 19.4, "value": 9.0, "tactical": 0.745, "n_TklW": 0.886, "n_Int": 0.753, "n_Fls": 0.231, "n_CrdY": 0.166, "n_OnOff": 0.975, "score": 0.739}, {"player": "James Sands", "team": "St Pauli", "league": "GER-Bundesliga", "age": 25.0, "nineties": 21.5, "value": 5.0, "tactical": 0.681, "n_TklW": 0.565, "n_Int": 0.989, "n_Fls": 0.441, "n_CrdY": 0.479, "n_OnOff": 0.64, "score": 0.735}];
+
+const SCATTER = [{"player": "Hugo Magnetti", "team": "Brest", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 29.9, "value": 6.0, "tactical": 0.85, "score": 0.843}, {"player": "Mohamed Kaba", "team": "Nantes", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 11.2, "value": 2.5, "tactical": 0.776, "score": 0.828}, {"player": "Himad Abdelli", "team": "Angers", "league": "FRA-Ligue 1", "age": 25.0, "nineties": 10.5, "value": 5.0, "tactical": 0.796, "score": 0.816}, {"player": "Johann Lepenant", "team": "Nantes", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 25.1, "value": 7.0, "tactical": 0.811, "score": 0.806}, {"player": "Joris Chotard", "team": "Brest", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 30.8, "value": 7.0, "tactical": 0.804, "score": 0.801}, {"player": "Tom Krauß", "team": "Köln", "league": "GER-Bundesliga", "age": 24.0, "nineties": 19.8, "value": 4.5, "tactical": 0.752, "score": 0.79}, {"player": "András Schäfer", "team": "Union Berlin", "league": "GER-Bundesliga", "age": 26.0, "nineties": 15.8, "value": 4.5, "tactical": 0.74, "score": 0.782}, {"player": "Nicolas Fonseca", "team": "Oviedo", "league": "ESP-La Liga", "age": 26.0, "nineties": 11.3, "value": 3.0, "tactical": 0.698, "score": 0.768}, {"player": "Julian Niehues", "team": "Heidenheim", "league": "GER-Bundesliga", "age": 24.0, "nineties": 15.4, "value": 1.5, "tactical": 0.671, "score": 0.765}, {"player": "Manu Morlanes", "team": "Mallorca", "league": "ESP-La Liga", "age": 26.0, "nineties": 19.6, "value": 2.4, "tactical": 0.655, "score": 0.744}, {"player": "Kristijan Jakić", "team": "Augsburg", "league": "GER-Bundesliga", "age": 28.0, "nineties": 18.4, "value": 6.0, "tactical": 0.703, "score": 0.74}, {"player": "Fran Beltrán", "team": "Girona", "league": "ESP-La Liga", "age": 26.0, "nineties": 11.2, "value": 4.0, "tactical": 0.672, "score": 0.739}, {"player": "Cameron Puertas", "team": "Werder Bremen", "league": "GER-Bundesliga", "age": 26.0, "nineties": 20.5, "value": 7.0, "tactical": 0.716, "score": 0.739}, {"player": "Kamory Doumbia", "team": "Brest", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 19.4, "value": 9.0, "tactical": 0.745, "score": 0.739}, {"player": "James Sands", "team": "St Pauli", "league": "GER-Bundesliga", "age": 25.0, "nineties": 21.5, "value": 5.0, "tactical": 0.681, "score": 0.735}, {"player": "Yassin Belkhdim", "team": "Angers", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 23.7, "value": 7.0, "tactical": 0.702, "score": 0.729}, {"player": "Elisha Owusu", "team": "Auxerre", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 26.0, "value": 4.0, "tactical": 0.651, "score": 0.725}, {"player": "Alejandro Rego", "team": "Athletic Club", "league": "ESP-La Liga", "age": 22.0, "nineties": 14.2, "value": 5.0, "tactical": 0.664, "score": 0.723}, {"player": "Marc Aguado", "team": "Elche", "league": "ESP-La Liga", "age": 25.0, "nineties": 27.8, "value": 3.5, "tactical": 0.632, "score": 0.716}, {"player": "Boubacar Traoré", "team": "Metz", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 15.4, "value": 4.0, "tactical": 0.632, "score": 0.712}, {"player": "Florian Neuhaus", "team": "Gladbach", "league": "GER-Bundesliga", "age": 28.0, "nineties": 10.3, "value": 2.5, "tactical": 0.606, "score": 0.709}, {"player": "Kervin Arriaga", "team": "Levante", "league": "ESP-La Liga", "age": 27.0, "nineties": 17.0, "value": 2.0, "tactical": 0.585, "score": 0.699}, {"player": "Iván Martín", "team": "Girona", "league": "ESP-La Liga", "age": 26.0, "nineties": 28.1, "value": 5.0, "tactical": 0.629, "score": 0.699}, {"player": "Nicolas Seiwald", "team": "RB Leipzig", "league": "GER-Bundesliga", "age": 24.0, "nineties": 29.9, "value": 25.0, "tactical": 0.92, "score": 0.696}, {"player": "Rodrigo Bentancur", "team": "Tottenham Hotspur", "league": "ENG-Premier League", "age": 28.0, "nineties": 20.9, "value": 20.0, "tactical": 0.845, "score": 0.695}, {"player": "Marc Roca", "team": "Real Betis", "league": "ESP-La Liga", "age": 28.0, "nineties": 22.5, "value": 4.0, "tactical": 0.608, "score": 0.695}, {"player": "Daichi Kamada", "team": "Crystal Palace", "league": "ENG-Premier League", "age": 28.0, "nineties": 21.1, "value": 10.0, "tactical": 0.696, "score": 0.694}, {"player": "Charles Vanhoutte", "team": "Nice", "league": "FRA-Ligue 1", "age": 26.0, "nineties": 19.7, "value": 7.0, "tactical": 0.65, "score": 0.693}, {"player": "Yassine Kechta", "team": "Le Havre", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 14.8, "value": 4.0, "tactical": 0.604, "score": 0.692}, {"player": "Kwasi Sibo", "team": "Oviedo", "league": "ESP-La Liga", "age": 27.0, "nineties": 18.7, "value": 1.4, "tactical": 0.564, "score": 0.691}, {"player": "Adama Camara", "team": "Paris FC", "league": "FRA-Ligue 1", "age": 28.0, "nineties": 24.0, "value": 3.0, "tactical": 0.581, "score": 0.686}, {"player": "Niklas Dorsch", "team": "Heidenheim", "league": "GER-Bundesliga", "age": 27.0, "nineties": 25.1, "value": 2.5, "tactical": 0.569, "score": 0.683}, {"player": "Ao Tanaka", "team": "Leeds United", "league": "ENG-Premier League", "age": 26.0, "nineties": 14.6, "value": 13.0, "tactical": 0.72, "score": 0.68}, {"player": "Senne Lynen", "team": "Werder Bremen", "league": "GER-Bundesliga", "age": 26.0, "nineties": 30.6, "value": 8.0, "tactical": 0.645, "score": 0.679}, {"player": "Eric Martel", "team": "Köln", "league": "GER-Bundesliga", "age": 23.0, "nineties": 28.4, "value": 8.0, "tactical": 0.638, "score": 0.674}, {"player": "Edu Expósito", "team": "Espanyol", "league": "ESP-La Liga", "age": 28.0, "nineties": 28.0, "value": 5.0, "tactical": 0.593, "score": 0.674}, {"player": "Yannik Engelhardt", "team": "Gladbach", "league": "GER-Bundesliga", "age": 24.0, "nineties": 27.6, "value": 7.0, "tactical": 0.621, "score": 0.673}, {"player": "Santi Comesaña", "team": "Villarreal", "league": "ESP-La Liga", "age": 28.0, "nineties": 26.7, "value": 8.0, "tactical": 0.63, "score": 0.668}, {"player": "Rassoul Ndiaye", "team": "Le Havre", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 28.5, "value": 8.0, "tactical": 0.615, "score": 0.658}, {"player": "Mahdi Camara", "team": "Rennes", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 29.5, "value": 12.0, "tactical": 0.667, "score": 0.653}, {"player": "Robin Fellhauer", "team": "Augsburg", "league": "GER-Bundesliga", "age": 27.0, "nineties": 31.1, "value": 3.5, "tactical": 0.538, "score": 0.651}, {"player": "Jessy Deminguet", "team": "Metz", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 22.2, "value": 2.0, "tactical": 0.515, "score": 0.65}, {"player": "Nicolai Remberg", "team": "Hamburger SV", "league": "GER-Bundesliga", "age": 25.0, "nineties": 32.0, "value": 9.0, "tactical": 0.613, "score": 0.646}, {"player": "Antonio Sánchez", "team": "Mallorca", "league": "ESP-La Liga", "age": 28.0, "nineties": 11.9, "value": 2.0, "tactical": 0.509, "score": 0.646}, {"player": "Ramón Terrats", "team": "Espanyol", "league": "ESP-La Liga", "age": 24.0, "nineties": 11.4, "value": 3.0, "tactical": 0.519, "score": 0.643}, {"player": "Pablo Ibáñez", "team": "Alavés", "league": "ESP-La Liga", "age": 26.0, "nineties": 24.8, "value": 4.0, "tactical": 0.53, "score": 0.64}, {"player": "Cristian Cásseres Jr.", "team": "Toulouse", "league": "FRA-Ligue 1", "age": 25.0, "nineties": 28.7, "value": 9.0, "tactical": 0.599, "score": 0.637}, {"player": "Noah Cadiou", "team": "Lorient", "league": "FRA-Ligue 1", "age": 26.0, "nineties": 20.9, "value": 3.0, "tactical": 0.51, "score": 0.636}, {"player": "Ilaix Moriba", "team": "Celta Vigo", "league": "ESP-La Liga", "age": 22.0, "nineties": 27.7, "value": 15.0, "tactical": 0.686, "score": 0.636}, {"player": "Louis Mouton", "team": "Angers", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 21.0, "value": 4.0, "tactical": 0.513, "score": 0.628}, {"player": "Tim Iroegbunam", "team": "Everton", "league": "ENG-Premier League", "age": 22.0, "nineties": 16.5, "value": 18.0, "tactical": 0.713, "score": 0.623}, {"player": "Lucien Agoume", "team": "Sevilla", "league": "ESP-La Liga", "age": 23.0, "nineties": 29.8, "value": 15.0, "tactical": 0.667, "score": 0.622}, {"player": "Jan Schöppner", "team": "Heidenheim", "league": "GER-Bundesliga", "age": 26.0, "nineties": 25.0, "value": 3.0, "tactical": 0.476, "score": 0.613}, {"player": "Salis Abdul Samed", "team": "Nice", "league": "FRA-Ligue 1", "age": 25.0, "nineties": 10.1, "value": 4.0, "tactical": 0.489, "score": 0.611}, {"player": "Jean-Victor Makengo", "team": "Lorient", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 20.0, "value": 6.0, "tactical": 0.517, "score": 0.61}, {"player": "Oriol Rey", "team": "Levante", "league": "ESP-La Liga", "age": 27.0, "nineties": 14.7, "value": 1.8, "tactical": 0.447, "score": 0.605}, {"player": "Sean Longstaff", "team": "Leeds United", "league": "ENG-Premier League", "age": 27.0, "nineties": 11.2, "value": 15.0, "tactical": 0.642, "score": 0.604}, {"player": "Antonio Blanco", "team": "Alavés", "league": "ESP-La Liga", "age": 25.0, "nineties": 34.6, "value": 10.0, "tactical": 0.556, "score": 0.596}, {"player": "Vitaly Janelt", "team": "Brentford", "league": "ENG-Premier League", "age": 27.0, "nineties": 16.0, "value": 16.0, "tactical": 0.644, "score": 0.596}, {"player": "Nikolas Nartey", "team": "Stuttgart", "league": "GER-Bundesliga", "age": 25.0, "nineties": 14.0, "value": 10.0, "tactical": 0.55, "score": 0.592}, {"player": "Pablo Martínez", "team": "Levante", "league": "ESP-La Liga", "age": 27.0, "nineties": 20.6, "value": 3.0, "tactical": 0.439, "score": 0.587}, {"player": "Beñat Turrientes", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 23.0, "nineties": 15.0, "value": 10.0, "tactical": 0.54, "score": 0.585}, {"player": "Iker Muñoz", "team": "Osasuna", "league": "ESP-La Liga", "age": 22.0, "nineties": 10.6, "value": 2.0, "tactical": 0.419, "score": 0.583}, {"player": "Batista Mendy", "team": "Sevilla", "league": "ESP-La Liga", "age": 25.0, "nineties": 18.0, "value": 7.5, "tactical": 0.499, "score": 0.582}, {"player": "Ibrahim Sangaré", "team": "Nottingham Forest", "league": "ENG-Premier League", "age": 27.0, "nineties": 23.1, "value": 20.0, "tactical": 0.682, "score": 0.581}, {"player": "Sergi Altimira", "team": "Real Betis", "league": "ESP-La Liga", "age": 23.0, "nineties": 13.2, "value": 20.0, "tactical": 0.681, "score": 0.58}, {"player": "Pedro Díaz", "team": "Rayo Vallecano", "league": "ESP-La Liga", "age": 27.0, "nineties": 20.8, "value": 3.0, "tactical": 0.424, "score": 0.576}, {"player": "Fares Chaïbi", "team": "Eintracht Frankfurt", "league": "GER-Bundesliga", "age": 22.0, "nineties": 19.9, "value": 15.0, "tactical": 0.597, "score": 0.573}, {"player": "Tanner Tessmann", "team": "Lyon", "league": "FRA-Ligue 1", "age": 23.0, "nineties": 21.7, "value": 10.0, "tactical": 0.518, "score": 0.57}, {"player": "Azzedine Ounahi", "team": "Girona", "league": "ESP-La Liga", "age": 25.0, "nineties": 19.6, "value": 10.0, "tactical": 0.516, "score": 0.568}, {"player": "Atakan Karazor", "team": "Stuttgart", "league": "GER-Bundesliga", "age": 28.0, "nineties": 20.9, "value": 8.0, "tactical": 0.483, "score": 0.566}, {"player": "Emile Smith Rowe", "team": "Fulham", "league": "ENG-Premier League", "age": 25.0, "nineties": 21.4, "value": 20.0, "tactical": 0.658, "score": 0.564}, {"player": "Wouter Burger", "team": "Hoffenheim", "league": "GER-Bundesliga", "age": 24.0, "nineties": 27.0, "value": 20.0, "tactical": 0.652, "score": 0.56}, {"player": "Alberto Reina", "team": "Oviedo", "league": "ESP-La Liga", "age": 27.0, "nineties": 27.4, "value": 2.0, "tactical": 0.384, "score": 0.559}, {"player": "Miguel Román", "team": "Celta Vigo", "league": "ESP-La Liga", "age": 22.0, "nineties": 14.6, "value": 15.0, "tactical": 0.573, "score": 0.556}, {"player": "Filip Ugrinic", "team": "Valencia", "league": "ESP-La Liga", "age": 26.0, "nineties": 16.7, "value": 6.0, "tactical": 0.439, "score": 0.556}, {"player": "Mikkel Damsgaard", "team": "Brentford", "league": "ENG-Premier League", "age": 25.0, "nineties": 22.8, "value": 30.0, "tactical": 0.787, "score": 0.551}, {"player": "Saša Lukić", "team": "Fulham", "league": "ENG-Premier League", "age": 28.0, "nineties": 19.3, "value": 10.0, "tactical": 0.485, "score": 0.547}, {"player": "Santiago Colombatto", "team": "Oviedo", "league": "ESP-La Liga", "age": 28.0, "nineties": 22.9, "value": 2.5, "tactical": 0.364, "score": 0.539}, {"player": "Djibril Sow", "team": "Sevilla", "league": "ESP-La Liga", "age": 28.0, "nineties": 24.3, "value": 7.5, "tactical": 0.436, "score": 0.538}, {"player": "Junior Mwanga", "team": "Nantes", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 14.0, "value": 6.0, "tactical": 0.408, "score": 0.534}, {"player": "Pol Lozano", "team": "Espanyol", "league": "ESP-La Liga", "age": 25.0, "nineties": 24.0, "value": 6.0, "tactical": 0.407, "score": 0.533}, {"player": "Carlos Soler", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 28.0, "nineties": 25.7, "value": 7.0, "tactical": 0.417, "score": 0.53}, {"player": "Albert Sambi Lokonga", "team": "Hamburger SV", "league": "GER-Bundesliga", "age": 25.0, "nineties": 19.0, "value": 12.0, "tactical": 0.49, "score": 0.529}, {"player": "Rocco Reitz", "team": "Gladbach", "league": "GER-Bundesliga", "age": 23.0, "nineties": 29.2, "value": 20.0, "tactical": 0.607, "score": 0.528}, {"player": "Hicham Boudaoui", "team": "Nice", "league": "FRA-Ligue 1", "age": 25.0, "nineties": 18.8, "value": 12.0, "tactical": 0.482, "score": 0.524}, {"player": "Han-Noah Massengo", "team": "Augsburg", "league": "GER-Bundesliga", "age": 24.0, "nineties": 27.0, "value": 8.0, "tactical": 0.419, "score": 0.521}, {"player": "Carles Aleñá", "team": "Alavés", "league": "ESP-La Liga", "age": 27.0, "nineties": 22.1, "value": 3.0, "tactical": 0.343, "score": 0.519}, {"player": "Pablo Torre", "team": "Mallorca", "league": "ESP-La Liga", "age": 22.0, "nineties": 17.8, "value": 5.0, "tactical": 0.372, "score": 0.519}, {"player": "Lovro Majer", "team": "Wolfsburg", "league": "GER-Bundesliga", "age": 27.0, "nineties": 15.2, "value": 8.0, "tactical": 0.411, "score": 0.515}, {"player": "Sofyan Amrabat", "team": "Real Betis", "league": "ESP-La Liga", "age": 28.0, "nineties": 14.4, "value": 10.0, "tactical": 0.439, "score": 0.514}, {"player": "Ethan Ampadu", "team": "Leeds United", "league": "ENG-Premier League", "age": 24.0, "nineties": 34.7, "value": 30.0, "tactical": 0.735, "score": 0.514}, {"player": "Ilia Gruev", "team": "Leeds United", "league": "ENG-Premier League", "age": 25.0, "nineties": 14.7, "value": 12.0, "tactical": 0.468, "score": 0.514}, {"player": "Brenden Aaronson", "team": "Leeds United", "league": "ENG-Premier League", "age": 24.0, "nineties": 27.2, "value": 22.0, "tactical": 0.614, "score": 0.513}, {"player": "Luka Sučić", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 22.0, "nineties": 11.4, "value": 10.0, "tactical": 0.433, "score": 0.51}, {"player": "Jens Stage", "team": "Werder Bremen", "league": "GER-Bundesliga", "age": 28.0, "nineties": 27.3, "value": 14.0, "tactical": 0.487, "score": 0.507}, {"player": "Nicolás Domínguez", "team": "Nottingham Forest", "league": "ENG-Premier League", "age": 27.0, "nineties": 13.1, "value": 15.0, "tactical": 0.502, "score": 0.506}, {"player": "Nadiem Amiri", "team": "Mainz 05", "league": "GER-Bundesliga", "age": 28.0, "nineties": 23.1, "value": 17.0, "tactical": 0.53, "score": 0.506}, {"player": "Pablo Marín", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 22.0, "nineties": 16.7, "value": 7.0, "tactical": 0.378, "score": 0.503}, {"player": "Elvis Rexhbeçaj", "team": "Augsburg", "league": "GER-Bundesliga", "age": 27.0, "nineties": 12.4, "value": 3.5, "tactical": 0.323, "score": 0.5}, {"player": "Patrick Osterhage", "team": "Freiburg", "league": "GER-Bundesliga", "age": 25.0, "nineties": 13.2, "value": 12.0, "tactical": 0.437, "score": 0.492}, {"player": "Joelinton", "team": "Newcastle United", "league": "ENG-Premier League", "age": 28.0, "nineties": 21.7, "value": 25.0, "tactical": 0.628, "score": 0.491}, {"player": "Xaver Schlager", "team": "RB Leipzig", "league": "GER-Bundesliga", "age": 27.0, "nineties": 20.4, "value": 10.0, "tactical": 0.397, "score": 0.485}, {"player": "Youri Tielemans", "team": "Aston Villa", "league": "ENG-Premier League", "age": 28.0, "nineties": 20.7, "value": 30.0, "tactical": 0.692, "score": 0.484}, {"player": "Sander Berge", "team": "Fulham", "league": "ENG-Premier League", "age": 27.0, "nineties": 32.3, "value": 25.0, "tactical": 0.616, "score": 0.483}, {"player": "Enzo Le Fée", "team": "Sunderland", "league": "ENG-Premier League", "age": 25.0, "nineties": 32.6, "value": 28.0, "tactical": 0.658, "score": 0.481}, {"player": "Samu Costa", "team": "Mallorca", "league": "ESP-La Liga", "age": 24.0, "nineties": 30.0, "value": 15.0, "tactical": 0.459, "score": 0.476}, {"player": "Joe Willock", "team": "Newcastle United", "league": "ENG-Premier League", "age": 25.0, "nineties": 10.9, "value": 14.0, "tactical": 0.44, "score": 0.473}, {"player": "Brais Méndez", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 28.0, "nineties": 18.4, "value": 8.0, "tactical": 0.344, "score": 0.468}, {"player": "Martim Neto", "team": "Elche", "league": "ESP-La Liga", "age": 22.0, "nineties": 15.0, "value": 4.0, "tactical": 0.278, "score": 0.464}, {"player": "Jon Moncayola", "team": "Osasuna", "league": "ESP-La Liga", "age": 27.0, "nineties": 33.5, "value": 7.0, "tactical": 0.312, "score": 0.456}, {"player": "Jon Gorrotxategi", "team": "Real Sociedad", "league": "ESP-La Liga", "age": 23.0, "nineties": 24.6, "value": 25.0, "tactical": 0.576, "score": 0.455}, {"player": "Tyler Morton", "team": "Lyon", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 28.0, "value": 30.0, "tactical": 0.644, "score": 0.451}, {"player": "Malik Tillman", "team": "Leverkusen", "league": "GER-Bundesliga", "age": 23.0, "nineties": 18.6, "value": 30.0, "tactical": 0.642, "score": 0.449}, {"player": "Aleix García", "team": "Leverkusen", "league": "GER-Bundesliga", "age": 28.0, "nineties": 29.6, "value": 20.0, "tactical": 0.489, "score": 0.446}, {"player": "Paul Nebel", "team": "Mainz 05", "league": "GER-Bundesliga", "age": 22.0, "nineties": 23.0, "value": 18.0, "tactical": 0.454, "score": 0.442}, {"player": "Alexis Claude-Maurice", "team": "Augsburg", "league": "GER-Bundesliga", "age": 27.0, "nineties": 23.3, "value": 15.0, "tactical": 0.393, "score": 0.43}, {"player": "Tyler Adams", "team": "Bournemouth", "league": "ENG-Premier League", "age": 26.0, "nineties": 19.7, "value": 25.0, "tactical": 0.533, "score": 0.425}, {"player": "Maxime Lopez", "team": "Paris FC", "league": "FRA-Ligue 1", "age": 27.0, "nineties": 21.8, "value": 5.0, "tactical": 0.232, "score": 0.421}, {"player": "Aimar Oroz", "team": "Osasuna", "league": "ESP-La Liga", "age": 23.0, "nineties": 23.8, "value": 7.5, "tactical": 0.265, "score": 0.418}, {"player": "Unai Gómez", "team": "Athletic Club", "league": "ESP-La Liga", "age": 22.0, "nineties": 10.4, "value": 5.0, "tactical": 0.226, "score": 0.417}, {"player": "Pape Matar Sarr", "team": "Tottenham Hotspur", "league": "ENG-Premier League", "age": 22.0, "nineties": 15.5, "value": 30.0, "tactical": 0.594, "score": 0.416}, {"player": "Anton Stach", "team": "Leeds United", "league": "ENG-Premier League", "age": 26.0, "nineties": 26.3, "value": 28.0, "tactical": 0.562, "score": 0.414}, {"player": "André", "team": "Wolves", "league": "ENG-Premier League", "age": 24.0, "nineties": 30.7, "value": 25.0, "tactical": 0.516, "score": 0.413}, {"player": "Ísak Jóhannesson", "team": "Köln", "league": "GER-Bundesliga", "age": 22.0, "nineties": 20.1, "value": 8.0, "tactical": 0.252, "score": 0.404}, {"player": "Jean-Ricner Bellegarde", "team": "Wolves", "league": "ENG-Premier League", "age": 27.0, "nineties": 13.9, "value": 16.0, "tactical": 0.367, "score": 0.402}, {"player": "Diego Gómez", "team": "Brighton", "league": "ENG-Premier League", "age": 22.0, "nineties": 23.6, "value": 25.0, "tactical": 0.499, "score": 0.401}, {"player": "Danel Sinani", "team": "St Pauli", "league": "GER-Bundesliga", "age": 28.0, "nineties": 23.0, "value": 3.0, "tactical": 0.173, "score": 0.401}, {"player": "Fabio Vieira", "team": "Hamburger SV", "league": "GER-Bundesliga", "age": 25.0, "nineties": 24.5, "value": 18.0, "tactical": 0.394, "score": 0.4}, {"player": "Exequiel Palacios", "team": "Leverkusen", "league": "GER-Bundesliga", "age": 26.0, "nineties": 12.2, "value": 25.0, "tactical": 0.496, "score": 0.399}, {"player": "Mason Mount", "team": "Manchester Utd", "league": "ENG-Premier League", "age": 26.0, "nineties": 11.3, "value": 25.0, "tactical": 0.49, "score": 0.395}, {"player": "Romano Schmid", "team": "Werder Bremen", "league": "GER-Bundesliga", "age": 25.0, "nineties": 33.1, "value": 15.0, "tactical": 0.325, "score": 0.383}, {"player": "Quinten Timber", "team": "Marseille", "league": "FRA-Ligue 1", "age": 24.0, "nineties": 12.3, "value": 25.0, "tactical": 0.469, "score": 0.38}, {"player": "Fabian Rieder", "team": "Augsburg", "league": "GER-Bundesliga", "age": 23.0, "nineties": 26.0, "value": 12.0, "tactical": 0.233, "score": 0.349}, {"player": "Adam Karabec", "team": "Lyon", "league": "FRA-Ligue 1", "age": 22.0, "nineties": 10.2, "value": 7.0, "tactical": 0.133, "score": 0.331}, {"player": "Marcus Tavernier", "team": "Bournemouth", "league": "ENG-Premier League", "age": 26.0, "nineties": 30.4, "value": 25.0, "tactical": 0.287, "score": 0.253}, {"player": "Oihan Sancet", "team": "Athletic Club", "league": "ESP-La Liga", "age": 25.0, "nineties": 19.9, "value": 25.0, "tactical": 0.239, "score": 0.219}, {"player": "Justin Kluivert", "team": "Bournemouth", "league": "ENG-Premier League", "age": 26.0, "nineties": 10.6, "value": 25.0, "tactical": 0.147, "score": 0.155}, {"player": "Maximilian Eggestein", "team": "Freiburg", "league": "GER-Bundesliga", "age": 28.0, "nineties": 34.0, "value": 10.0, "tactical": null, "score": null}].filter(d => Number.isFinite(d.tactical) && Number.isFinite(d.score));
+
+const RADAR = {"dimensions": ["Recuperação","Leitura","Disciplina","Controlo","Impacto"], "ideal": [0.422, 0.66, 0.494, 0.439, 0.543], "ideal_players": ["Santi Comesaña", "Daniel Parejo", "Tajon Buchanan", "Pape Gueye", "Nicolas Pépé", "Thomas Partey", "Alberto Moleiro"], "players": [{"name": "Hugo Magnetti", "team": "Brest", "value": 6.0, "score": 0.8431912619453761, "values": [0.863, 0.933, 0.578, 0.645, 0.922]}, {"name": "Mohamed Kaba", "team": "Nantes", "value": 2.5, "score": 0.8275746862884297, "values": [0.766, 0.905, 0.335, 0.496, 0.929]}, {"name": "Himad Abdelli", "team": "Angers", "value": 5.0, "score": 0.8155667982186094, "values": [0.91, 0.863, 0.216, 0.781, 0.812]}, {"name": "Johann Lepenant", "team": "Nantes", "value": 7.0, "score": 0.8057735979848889, "values": [0.959, 0.8, 0.485, 0.55, 0.855]}, {"name": "Joris Chotard", "team": "Brest", "value": 7.0, "score": 0.8006847730588799, "values": [0.598, 0.962, 0.701, 0.871, 0.924]}]};
+
+const DIAG = {"metrics": ["n_TklW","n_Int","n_Fls","n_CrdY","n_OnOff"], "labels": ["Recuperação","Leitura","Disciplina","Controlo","Impacto"], "corr": [[1.0,0.44,-0.35,-0.25,-0.07],[0.44,1.0,-0.13,-0.17,0.0],[-0.35,-0.13,1.0,0.49,0.12],[-0.25,-0.17,0.49,1.0,0.06],[-0.07,0.0,0.12,0.06,1.0]], "explained_variance": [0.389,0.215,0.19,0.118,0.089], "manual_weights": [0.32,0.28,0.10,0.08,0.22], "pca_weights": [0.252,0.193,0.252,0.238,0.065], "n_sample": 554};
+
+const CARD_NOTES = {
+  "Hugo Magnetti": "Maior score do ranking. Percentis altos em recuperação, leitura e impacto (On-Off) — perfil mais completo dos cinco.",
+  "Mohamed Kaba": "Menor valor de mercado do grupo. Amostra menor (11 x90s) — vale acompanhar mais uma temporada antes de confiar 100% na consistência.",
+  "Himad Abdelli": "Índice tático alto, mas publicamente é mais conhecido como armador ofensivo do que destruidor. Conferir vídeo antes de tratar como volante puro.",
+  "Johann Lepenant": "Melhor volume de minutos do grupo (25 x90s) combinado com o maior percentil de recuperação — leitura consistente ao longo da temporada.",
+  "Joris Chotard": "Maior percentil de impacto (On-Off) do grupo inteiro — o time do Brest rende visivelmente mais com ele em campo."
+};
+
+function fmtEUR(v){ return "€" + (v % 1 === 0 ? v.toFixed(0) : v.toFixed(1)) + "M"; }
+function median(arr){ const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2 ? s[m] : (s[m-1]+s[m])/2; }
+
+const tt = document.getElementById('tooltip');
+function showTT(evt, html){
+  tt.innerHTML = html;
+  tt.classList.add('show');
+  moveTT(evt);
+}
+function moveTT(evt){
+  const pad = 14;
+  let x = evt.clientX + pad, y = evt.clientY + pad;
+  if (x + 250 > window.innerWidth) x = evt.clientX - 250 - pad;
+  if (y + 120 > window.innerHeight) y = evt.clientY - 120 - pad;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+}
+function hideTT(){ tt.classList.remove('show'); }
+
+/* ================= BAR CHART ================= */
+(function(){
+  const el = document.getElementById('barsChart');
+  const maxScore = Math.max(...TOP15.map(d=>d.score)) * 1.06;
+  const MAXV = 30, MINV = 1;
+  TOP15.forEach((d, i) => {
+    const nvalue = Math.min(1, Math.max(0, 1 - (d.value - MINV)/(MAXV - MINV)));
+    const segTactical = d.tactical * 0.70;
+    const segValue = nvalue * 0.30;
+    const isPick = i < 5;
+    const w1 = (segTactical / maxScore) * 100;
+    const w2 = (segValue / maxScore) * 100;
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="bar-rank mono">${i+1}</div>
+      <div class="bar-name"><div class="n">${d.player}</div><div class="c">${d.team}</div></div>
+      <div class="bar-track">
+        <div class="bar-seg" style="left:0; width:${w1}%; background:${isPick ? 'var(--accent-fill)' : 'var(--pool)'}"></div>
+        <div class="bar-seg" style="left:${w1}%; width:${w2}%; background:var(--ink-2); opacity:.4"></div>
+      </div>
+      <div class="bar-score mono"><b>${d.score.toFixed(3)}</b></div>
+    `;
+    row.addEventListener('mouseenter', (e) => showTT(e, `
+      <b>${d.player}</b>
+      <div class="row"><span>${d.team}</span><span>${d.league.replace(/^[A-Z]+-/,'')}</span></div>
+      <div class="row"><span>Idade</span><span>${d.age}</span></div>
+      <div class="row"><span>Minutos (x90s)</span><span>${d.nineties}</span></div>
+      <div class="row"><span>Valor</span><span>${fmtEUR(d.value)}</span></div>
+      <div class="row"><span>Índice tático</span><span>${d.tactical.toFixed(3)}</span></div>
+      <div class="row"><span>Recuperação · Leitura</span><span>${d.n_TklW.toFixed(2)} · ${d.n_Int.toFixed(2)}</span></div>
+      <div class="row"><span>Disciplina · Controlo</span><span>${d.n_Fls.toFixed(2)} · ${d.n_CrdY.toFixed(2)}</span></div>
+      <div class="row"><span>Impacto (On-Off)</span><span>${d.n_OnOff.toFixed(2)}</span></div>
+    `));
+    row.addEventListener('mousemove', moveTT);
+    row.addEventListener('mouseleave', hideTT);
+    el.appendChild(row);
+  });
+
+  const table = document.getElementById('topTable');
+  table.innerHTML = `<thead><tr><th>#</th><th>Jogador</th><th>Clube</th><th>Liga</th><th style="text-align:right">Idade</th><th style="text-align:right">Valor</th><th style="text-align:right">Tático</th><th style="text-align:right">Score</th></tr></thead>
+  <tbody>${TOP15.map((d,i)=>`<tr><td class="mono">${i+1}</td><td>${d.player}</td><td>${d.team}</td><td>${d.league}</td><td class="num">${d.age}</td><td class="num">${fmtEUR(d.value)}</td><td class="num">${d.tactical.toFixed(3)}</td><td class="num">${d.score.toFixed(3)}</td></tr>`).join('')}</tbody>`;
+})();
+
+/* ================= SCATTER ================= */
+(function(){
+  const svg = document.getElementById('scatterChart');
+  const W = 1100, H = 560, M = {top:20, right:30, bottom:50, left:56};
+  const iw = W - M.left - M.right, ih = H - M.top - M.bottom;
+  const xMax = 30, yMax = Math.max(...SCATTER.map(d=>d.tactical)) * 1.05;
+  const rMin = SCATTER.reduce((a,d)=>Math.min(a,d.nineties),999), rMax = SCATTER.reduce((a,d)=>Math.max(a,d.nineties),0);
+
+  const xScale = v => M.left + (v/xMax)*iw;
+  const yScale = v => M.top + ih - (v/yMax)*ih;
+  const rScale = v => 3.5 + ((v-rMin)/(rMax-rMin)) * 11;
+
+  const medX = median(SCATTER.map(d=>d.value));
+  const medY = median(SCATTER.map(d=>d.tactical));
+
+  const pickNames = new Set(TOP15.slice(0,5).map(d=>d.player));
+  const refNames = new Set(["Rodrigo Bentancur","Nicolas Seiwald","Sergi Altimira"]);
+
+  let svgHTML = "";
+
+  // gridlines (x every 5, y every 0.2)
+  for(let gx=0; gx<=xMax; gx+=5){
+    svgHTML += `<line class="grid-line" x1="${xScale(gx)}" y1="${M.top}" x2="${xScale(gx)}" y2="${M.top+ih}"/>`;
+    svgHTML += `<text class="axis-label" x="${xScale(gx)}" y="${M.top+ih+20}" text-anchor="middle">€${gx}M</text>`;
+  }
+  for(let gy=0; gy<=yMax; gy+=0.2){
+    svgHTML += `<line class="grid-line" x1="${M.left}" y1="${yScale(gy)}" x2="${M.left+iw}" y2="${yScale(gy)}"/>`;
+    svgHTML += `<text class="axis-label" x="${M.left-10}" y="${yScale(gy)+3}" text-anchor="end">${gy.toFixed(1)}</text>`;
+  }
+  svgHTML += `<text class="axis-label" x="${M.left+iw/2}" y="${H-6}" text-anchor="middle">Valor de mercado</text>`;
+  svgHTML += `<text class="axis-label" x="14" y="${M.top+ih/2}" text-anchor="middle" transform="rotate(-90 14 ${M.top+ih/2})">Índice tático</text>`;
+
+  // opportunity zone
+  svgHTML += `<line class="zone-line" x1="${xScale(medX)}" y1="${M.top}" x2="${xScale(medX)}" y2="${M.top+ih}"/>`;
+  svgHTML += `<line class="zone-line" x1="${M.left}" y1="${yScale(medY)}" x2="${M.left+iw}" y2="${yScale(medY)}"/>`;
+  svgHTML += `<text class="zone-text" x="${M.left+8}" y="${M.top+16}">zona de oportunidade</text>`;
+
+  // dots — pool first (behind), then ref, then picks (on top)
+  const pool = SCATTER.filter(d=>!pickNames.has(d.player) && !refNames.has(d.player));
+  const refs = SCATTER.filter(d=>refNames.has(d.player));
+  const picks = SCATTER.filter(d=>pickNames.has(d.player));
+
+  function dotTT(d){
+    return `<b>${d.player}</b>
+      <div class="row"><span>${d.team}</span><span>${d.league.replace(/^[A-Z]+-/,'')}</span></div>
+      <div class="row"><span>Valor</span><span>${fmtEUR(d.value)}</span></div>
+      <div class="row"><span>Índice tático</span><span>${d.tactical.toFixed(3)}</span></div>
+      <div class="row"><span>Minutos (x90s)</span><span>${d.nineties}</span></div>`;
+  }
+
+  pool.forEach(d=>{
+    svgHTML += `<circle class="dot-pool" data-i="${SCATTER.indexOf(d)}" cx="${xScale(d.value)}" cy="${yScale(d.tactical)}" r="${rScale(d.nineties)}"/>`;
+  });
+  refs.forEach(d=>{
+    svgHTML += `<circle class="dot-ref" data-i="${SCATTER.indexOf(d)}" cx="${xScale(d.value)}" cy="${yScale(d.tactical)}" r="${rScale(d.nineties)}"/>`;
+  });
+  picks.forEach(d=>{
+    svgHTML += `<circle class="dot-pick" data-i="${SCATTER.indexOf(d)}" cx="${xScale(d.value)}" cy="${yScale(d.tactical)}" r="${rScale(d.nineties)}"/>`;
+  });
+
+  // Labels: highlighted points often cluster in value/tactical space (the whole
+  // point of a "value pick"), so place labels with simple collision avoidance
+  // instead of a fixed offset — otherwise names overlap into an unreadable mess.
+  const labelDefs = [
+    ...refs.map(d => ({ d, cls: 'dot-label-ref' })),
+    ...picks.map(d => ({ d, cls: 'dot-label' })),
+  ].map(({d, cls}) => {
+    const dotX = xScale(d.value), dotY = yScale(d.tactical), r = rScale(d.nineties);
+    return { text: d.player, cls, dotX, dotY, x: dotX + r + 6, y: dotY + 4, w: d.player.length * 6.1 + 6, h: 13 };
+  }).sort((a,b) => a.y - b.y);
+
+  const placed = [];
+  labelDefs.forEach(l => {
+    let tries = 0;
+    while (placed.some(p => l.x < p.x + p.w && l.x + l.w > p.x && Math.abs(l.y - p.y) < 13) && tries < 12){
+      l.y += 13;
+      tries++;
+    }
+    placed.push(l);
+  });
+
+  labelDefs.forEach(l => {
+    if (Math.abs(l.y - (l.dotY + 4)) > 3){
+      svgHTML += `<line x1="${l.dotX+2}" y1="${l.dotY}" x2="${l.x-3}" y2="${l.y-4}" stroke="var(--muted)" stroke-width="1" opacity="0.5"/>`;
+    }
+    svgHTML += `<text class="${l.cls}" x="${l.x}" y="${l.y}">${l.text}</text>`;
+  });
+
+  svg.innerHTML = svgHTML;
+  svg.querySelectorAll('circle').forEach(c=>{
+    const d = SCATTER[+c.dataset.i];
+    c.addEventListener('mouseenter', e=>showTT(e, dotTT(d)));
+    c.addEventListener('mousemove', moveTT);
+    c.addEventListener('mouseleave', hideTT);
+  });
+})();
+
+/* ================= RADAR ================= */
+(function(){
+  const grid = document.getElementById('radarGrid');
+  const dims = RADAR.dimensions;
+  const n = dims.length;
+  const size = 210, cx = size/2, cy = size/2 - 6, R = 74;
+  const angle = i => -Math.PI/2 + i*(2*Math.PI/n);
+  const pt = (val, i) => [cx + Math.cos(angle(i))*R*val, cy + Math.sin(angle(i))*R*val];
+  const poly = vals => vals.map((v,i)=>pt(v,i).join(',')).join(' ');
+
+  RADAR.players.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'radar-card';
+    let rings = '';
+    [0.25,0.5,0.75,1.0].forEach(f=>{
+      rings += `<polygon class="rgrid" points="${poly(dims.map(()=>f))}"/>`;
+    });
+    let axes = '';
+    dims.forEach((label,i)=>{
+      const [ex,ey] = pt(1.12,i);
+      axes += `<line class="rgrid" x1="${cx}" y1="${cy}" x2="${pt(1,i)[0]}" y2="${pt(1,i)[1]}"/>`;
+      axes += `<text class="raxis-label" x="${ex}" y="${ey}" text-anchor="middle">${label}</text>`;
+    });
+    const svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      ${rings}${axes}
+      <polygon class="rpoly-ideal" points="${poly(RADAR.ideal)}"/>
+      <polygon class="rpoly-player" points="${poly(p.values)}"/>
+    </svg>`;
+    card.innerHTML = svg + `<div class="radar-name">${p.name}</div><div class="radar-meta">${p.team} · ${fmtEUR(p.value)}</div><div class="radar-score">${p.score.toFixed(3)}</div>`;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('radarNote').innerHTML =
+    `<b>Perfil ideal</b> calculado a partir de ${RADAR.ideal_players.length} volantes atuais do Villarreal no dataset: ${RADAR.ideal_players.join(', ')}.`;
+})();
+
+/* ================= HEATMAP ================= */
+(function(){
+  const svg = document.getElementById('heatmap');
+  const labels = DIAG.labels;
+  const n = labels.length;
+  const M = {left: 92, top: 14};
+  const cell = 46;
+  function divColor(v){
+    const t = (v+1)/2; // 0..1
+    const mix = (a,b,t) => Math.round(a + (b-a)*t);
+    // interpolate neg -> mid -> pos via two segments
+    let c1, c2, tt;
+    if (t < 0.5){ c1 = hexRgb('#2a78d6'); c2 = hexRgb('#f0efec'); tt = t/0.5; }
+    else { c1 = hexRgb('#f0efec'); c2 = hexRgb('#e34948'); tt = (t-0.5)/0.5; }
+    return `rgb(${mix(c1[0],c2[0],tt)},${mix(c1[1],c2[1],tt)},${mix(c1[2],c2[2],tt)})`;
+  }
+  function hexRgb(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+
+  let html = '';
+  labels.forEach((lab,i)=>{
+    html += `<text class="heat-cell-label" x="${M.left-8}" y="${M.top+i*cell+cell/2+3}" text-anchor="end">${lab}</text>`;
+    html += `<text class="heat-cell-label" x="${M.left+i*cell+cell/2}" y="${M.top-8}" text-anchor="middle" transform="rotate(-40 ${M.left+i*cell+cell/2} ${M.top-8})">${lab}</text>`;
+  });
+  for(let r=0;r<n;r++){
+    for(let c=0;c<n;c++){
+      const v = DIAG.corr[r][c];
+      const x = M.left + c*cell, y = M.top + r*cell;
+      const bg = divColor(v);
+      html += `<rect x="${x+1}" y="${y+1}" width="${cell-2}" height="${cell-2}" rx="2" fill="${bg}"/>`;
+      html += `<text class="heat-val" x="${x+cell/2}" y="${y+cell/2+4}" text-anchor="middle" fill="${Math.abs(v)>0.55?'#fff':'var(--ink)'}">${v.toFixed(2)}</text>`;
+    }
+  }
+  svg.setAttribute('viewBox', `0 0 ${M.left+n*cell+10} ${M.top+n*cell+10}`);
+  svg.innerHTML = html;
+})();
+
+/* ================= WEIGHT BARS ================= */
+(function(){
+  const el = document.getElementById('weightBars');
+  const maxW = Math.max(...DIAG.manual_weights, ...DIAG.pca_weights) * 1.15;
+  let html = '';
+  DIAG.labels.forEach((lab,i)=>{
+    const mw = (DIAG.manual_weights[i]/maxW)*100;
+    const pw = (DIAG.pca_weights[i]/maxW)*100;
+    html += `<div class="wbar-row">
+      <div class="wbar-label">${lab}</div>
+      <div class="wbar-track">
+        <div class="wbar-bg"></div>
+        <div class="wbar-fill manual" style="width:${mw}%"></div>
+        <div class="wbar-fill pca" style="width:${pw}%"></div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html + `<div class="legend-row" style="margin-top:8px;padding-top:10px">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--accent-fill)"></span>Peso manual (usado no ranking)</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--reference);opacity:.6"></span>Peso implícito (1ª comp. PCA)</div>
+    </div>`;
+
+  const vr = document.getElementById('varRow');
+  const maxV = Math.max(...DIAG.explained_variance);
+  vr.innerHTML = DIAG.explained_variance.map((v,i)=>`
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">
+      <div style="font-size:10.5px;color:var(--ink-2);margin-bottom:4px" class="mono">${(v*100).toFixed(0)}%</div>
+      <div class="var-bar" style="height:${(v/maxV)*100}%;width:70%"></div>
+      <div class="var-label">PC${i+1}</div>
+    </div>`).join('');
+})();
+
+/* ================= PLAYER CARDS ================= */
+(function(){
+  const el = document.getElementById('playerCards');
+  TOP15.slice(0,5).forEach((d,i)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    const bars = [
+      ['Recup.', d.n_TklW], ['Leitura', d.n_Int], ['Discip.', d.n_Fls], ['Control.', d.n_CrdY], ['Impacto', d.n_OnOff]
+    ].map(([lab,v])=>`<div class="cb-row"><div class="cb-label">${lab}</div><div class="cb-track"><div class="cb-fill" style="width:${v*100}%"></div></div></div>`).join('');
+    card.innerHTML = `
+      <div class="card-rank">#${i+1} RECOMENDADO</div>
+      <div class="card-name">${d.player}</div>
+      <div class="card-meta">${d.team} · ${d.league.replace(/^[A-Z]+-/,'')} · ${d.age} anos</div>
+      <div class="card-stats">
+        <div class="card-stat"><b>${fmtEUR(d.value)}</b><span>valor</span></div>
+        <div class="card-stat"><b>${d.tactical.toFixed(2)}</b><span>tático</span></div>
+        <div class="card-stat"><b>${d.score.toFixed(2)}</b><span>score</span></div>
+      </div>
+      <div class="card-bars">${bars}</div>
+      <div class="card-note">${CARD_NOTES[d.player] || ''}</div>
+    `;
+    el.appendChild(card);
+  });
+})();
+</script>
+
+</body>
+</html>

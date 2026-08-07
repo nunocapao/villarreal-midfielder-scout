@@ -1,0 +1,14 @@
+my_venv/
+__pycache__/
+*.pyc
+downloaded_files/
+
+data/raw/
+data/processed/
+outputs/*
+!outputs/figures/
+outputs/figures/*
+!outputs/figures/radar_chart.png
+!outputs/figures/bubble_chart.png
+
+.ipynb_checkpoints/
